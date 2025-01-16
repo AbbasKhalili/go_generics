@@ -5,6 +5,10 @@ import (
 	"strings"
 )
 
+type Number interface {
+	int64 | float64
+}
+
 func main() {
 
 	intDic := map[string]int64{
@@ -32,6 +36,8 @@ func main() {
 	fmt.Println("sum float by generics :", floatByGen)
 
 	fmt.Println("multiple by generics :", multiple(8))
+
+	fmt.Println("multiple by generics and interface constraint :", multiple2[int64](8, 9))
 }
 
 func SumIntsOrFloats[K comparable, V int64 | float64](dic map[K]V) V {
@@ -40,6 +46,10 @@ func SumIntsOrFloats[K comparable, V int64 | float64](dic map[K]V) V {
 		num += v
 	}
 	return num
+}
+
+func multiple2[T Number](number1 T, number2 T) T {
+	return number1 * number2
 }
 
 func multiple[K int | int8 | int16 | int32 | int64 | float32 | float64](val K) K {
